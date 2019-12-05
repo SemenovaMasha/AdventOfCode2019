@@ -6,10 +6,6 @@ namespace AdventOfCode2019
 {
     class Task1 : TaskI
     {
-        public override int taskNumber
-        {
-            get { return 1; }
-        }
         public override void Start1()
         {
             string fileName = GetFileName1();
@@ -44,6 +40,11 @@ namespace AdventOfCode2019
                 list.RemoveAt(0);
             }
             Console.WriteLine(res);
+        }
+
+        public override int TaskNumber()
+        {
+            return 1;
         }
     }
 }
