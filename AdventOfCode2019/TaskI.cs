@@ -32,13 +32,24 @@ namespace AdventOfCode2019
                 .ToList();
         }
 
-        public List<int> GetIntList_BySeparator(string fileName,string separator)
+        public List<int> GetIntList_BySeparator(string fileName, string separator)
         {
             return System.IO.File
                 .ReadAllText(fileName)
                 .Split(separator)
                 .Select(x => int.Parse(x))
                 .ToList();
+        }
+
+        public List<string> GetStringList_ByLine(string fileName)
+        {
+            return System.IO.File
+              .ReadAllLines(fileName)
+              .ToList();
+        }
+        public List<string> GetStringList_FromString_BySeparator(string s, string separator)
+        {
+            return s.Split(separator).ToList();
         }
     }
 }
