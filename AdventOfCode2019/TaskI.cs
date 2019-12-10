@@ -7,14 +7,15 @@ namespace AdventOfCode2019
 {
     public abstract class TaskI
     {
-        public abstract int TaskNumber();
+        public abstract int TaskNumber { get; }
+
         public string GetFileName1()
         {
-            return inputPath + TaskNumber() + "_1.txt";
+            return inputPath + TaskNumber+ "_1.txt";
         }
         public string GetFileName2()
         {
-            return inputPath + TaskNumber() + "_2.txt";
+            return inputPath + TaskNumber+ "_2.txt";
         }
         public string GetFileName(string file)
         {
@@ -50,6 +51,11 @@ namespace AdventOfCode2019
         public List<string> GetStringList_FromString_BySeparator(string s, string separator)
         {
             return s.Split(separator).ToList();
+        }
+        public string GetString(string fileName)
+        {
+            return System.IO.File
+                .ReadAllText(fileName);
         }
     }
 }

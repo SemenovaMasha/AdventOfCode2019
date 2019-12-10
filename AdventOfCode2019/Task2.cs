@@ -78,9 +78,6 @@ namespace AdventOfCode2019
             Console.WriteLine("end");
         }
 
-        public override int TaskNumber()
-        {
-            return 2;
-        }
+        public override int TaskNumber => 2;
     }
 }

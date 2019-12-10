@@ -213,10 +213,7 @@ namespace AdventOfCode2019
             return ++phase;
         }
 
-        public override int TaskNumber()
-        {
-            return 7;
-        }
+        public override int TaskNumber => 7;
 
         class Amplifier
         {

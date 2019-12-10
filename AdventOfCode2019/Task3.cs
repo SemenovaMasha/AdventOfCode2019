@@ -257,10 +257,7 @@ namespace AdventOfCode2019
         }
 
 
-        public override int TaskNumber()
-        {
-            return 3;
-        }
+        public override int TaskNumber => 3;
 
         class Move
         {

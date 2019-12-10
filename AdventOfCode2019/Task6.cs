@@ -74,10 +74,7 @@ namespace AdventOfCode2019
             Console.WriteLine(path.Count()); 
         }
 
-        public override int TaskNumber()
-        {
-            return 6;
-        }
+        public override int TaskNumber => 6;
     }
 
     class OrbitObject
