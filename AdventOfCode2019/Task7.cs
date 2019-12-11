@@ -29,15 +29,15 @@ namespace AdventOfCode2019
         public override void Start1()
         {
             var filename = GetFileName1();
-            var list = GetIntList_BySeparator(filename, ",");
+            var list = GetLongList_BySeparator(filename, ",");
 
-            var maxOutput = 0;
+            long maxOutput = 0;
             foreach(var permute in Permutations(new List<int>() { 0, 1, 2, 3, 4 }))
             {
                 var Phases = permute;
                 var currentPosition = 0;
-                var Output = new List<int>();
-                var IO = new LinkedList<int>();
+                var Output = new List<long>();
+                var IO = new LinkedList<long>();
 
                 //var Phases = new List<int>() { 0, 1, 2, 3, 4 };
                 IO.AddLast(0);
@@ -51,38 +51,38 @@ namespace AdventOfCode2019
                     {
                         int opcode = GetOpcodeFromInstruction(list[currentPosition].ToString());
                         var modes = GetModes(list[currentPosition].ToString());
-                        int firstParam;
-                        int secondParam;
+                        long firstParam;
+                        long secondParam;
                         switch (opcode)
                         {
                             case 1:
-                                firstParam = modes[0] == 0 ? list[list[currentPosition + 1]] : list[currentPosition + 1];
-                                secondParam = modes[1] == 0 ? list[list[currentPosition + 2]] : list[currentPosition + 2];
-                                list[list[currentPosition + 3]] = firstParam + secondParam;
+                                firstParam = modes[0] == 0 ? list[(int)(list[currentPosition + 1])] : list[currentPosition + 1];
+                                secondParam = modes[1] == 0 ? list[(int)list[currentPosition + 2]] : list[currentPosition + 2];
+                                list[(int)list[currentPosition + 3]] = firstParam + secondParam;
                                 currentPosition += 4;
                                 break;
                             case 2:
-                                firstParam = modes[0] == 0 ? list[list[currentPosition + 1]] : list[currentPosition + 1];
-                                secondParam = modes[1] == 0 ? list[list[currentPosition + 2]] : list[currentPosition + 2];
-                                list[list[currentPosition + 3]] = firstParam * secondParam;
+                                firstParam = modes[0] == 0 ? list[(int)list[currentPosition + 1]] : list[currentPosition + 1];
+                                secondParam = modes[1] == 0 ? list[(int)list[currentPosition + 2]] : list[currentPosition + 2];
+                                list[(int)list[currentPosition + 3]] = firstParam * secondParam;
                                 currentPosition += 4;
                                 break;
                             case 3: //save input
-                                list[list[currentPosition + 1]] = IO.First.Value;
+                                list[(int)list[currentPosition + 1]] = IO.First.Value;
                                 IO.RemoveFirst();
                                 currentPosition += 2;
                                 break;
                             case 4: //output
-                                IO.AddLast(list[list[currentPosition + 1]]);
-                                Output.Add(list[list[currentPosition + 1]]);
+                                IO.AddLast(list[(int)list[currentPosition + 1]]);
+                                Output.Add(list[(int)list[currentPosition + 1]]);
                                 currentPosition += 2;
                                 break;
                             case 5:
-                                firstParam = modes[0] == 0 ? list[list[currentPosition + 1]] : list[currentPosition + 1];
-                                secondParam = modes[1] == 0 ? list[list[currentPosition + 2]] : list[currentPosition + 2];
+                                firstParam = modes[0] == 0 ? list[(int)list[currentPosition + 1]] : list[currentPosition + 1];
+                                secondParam = modes[1] == 0 ? list[(int)list[currentPosition + 2]] : list[currentPosition + 2];
                                 if (firstParam != 0)
                                 {
-                                    currentPosition = secondParam;
+                                    currentPosition = (int)secondParam;
                                 }
                                 else
                                 {
@@ -90,11 +90,11 @@ namespace AdventOfCode2019
                                 }
                                 break;
                             case 6:
-                                firstParam = modes[0] == 0 ? list[list[currentPosition + 1]] : list[currentPosition + 1];
-                                secondParam = modes[1] == 0 ? list[list[currentPosition + 2]] : list[currentPosition + 2];
+                                firstParam = modes[0] == 0 ? list[(int)list[currentPosition + 1]] : list[currentPosition + 1];
+                                secondParam = modes[1] == 0 ? list[(int)list[currentPosition + 2]] : list[currentPosition + 2];
                                 if (firstParam == 0)
                                 {
-                                    currentPosition = secondParam;
+                                    currentPosition = (int)secondParam;
                                 }
                                 else
                                 {
@@ -102,28 +102,28 @@ namespace AdventOfCode2019
                                 }
                                 break;
                             case 7:
-                                firstParam = modes[0] == 0 ? list[list[currentPosition + 1]] : list[currentPosition + 1];
-                                secondParam = modes[1] == 0 ? list[list[currentPosition + 2]] : list[currentPosition + 2];
+                                firstParam = modes[0] == 0 ? list[(int)list[currentPosition + 1]] : list[currentPosition + 1];
+                                secondParam = modes[1] == 0 ? list[(int)list[currentPosition + 2]] : list[currentPosition + 2];
                                 if (firstParam < secondParam)
                                 {
-                                    list[list[currentPosition + 3]] = 1;
+                                    list[(int)list[currentPosition + 3]] = 1;
                                 }
                                 else
                                 {
-                                    list[list[currentPosition + 3]] = 0;
+                                    list[(int)list[currentPosition + 3]] = 0;
                                 }
                                 currentPosition += 4;
                                 break;
                             case 8:
-                                firstParam = modes[0] == 0 ? list[list[currentPosition + 1]] : list[currentPosition + 1];
-                                secondParam = modes[1] == 0 ? list[list[currentPosition + 2]] : list[currentPosition + 2];
+                                firstParam = modes[0] == 0 ? list[(int)list[currentPosition + 1]] : list[currentPosition + 1];
+                                secondParam = modes[1] == 0 ? list[(int)list[currentPosition + 2]] : list[currentPosition + 2];
                                 if (firstParam == secondParam)
                                 {
-                                    list[list[currentPosition + 3]] = 1;
+                                    list[(int)list[currentPosition + 3]] = 1;
                                 }
                                 else
                                 {
-                                    list[list[currentPosition + 3]] = 0;
+                                    list[(int)list[currentPosition + 3]] = 0;
                                 }
                                 currentPosition += 4;
                                 break;
@@ -166,7 +166,7 @@ namespace AdventOfCode2019
         {
             var filename = GetFileName1();
 
-            var maxOutput = 0;
+            long maxOutput = 0;
             foreach (var permute in Permutations(new List<int>() { 5,6,7,8,9 }))
             {
                 var phases = permute.ToList();
@@ -179,7 +179,7 @@ namespace AdventOfCode2019
                 {
                     Amplifiers.Add(new Amplifier(phase)
                     {
-                        IntCode = GetIntList_BySeparator(filename, ","),
+                        IntCode = GetLongList_BySeparator(filename, ","),
                     });
                 }
 
@@ -215,136 +215,196 @@ namespace AdventOfCode2019
 
         public override int TaskNumber => 7;
 
-        class Amplifier
+     }
+    public class Amplifier
+    {
+        private int currentPosition { get; set; } = 0;
+        public List<long> IntCode { get; set; } = new List<long>();
+        public List<long> Output { get; set; } = new List<long>();
+        public Amplifier Next { get; set; }
+
+        public int Phase { get; set; }
+
+        public int RelativeBase { get; set; } = 0;
+
+        public LinkedList<long> IO { get; set; } = new LinkedList<long>();
+        public Amplifier(int phase)
         {
-            private int currentPosition { get; set; } = 0;
-            public List<int> IntCode { get; set; } = new List<int>();
-            public List<int> Output { get; set; } = new List<int>();
-            public Amplifier Next { get; set; }
-
-            public int Phase { get; set; }
-
-            public LinkedList<int> IO { get; set; } = new LinkedList<int>();
-            public Amplifier(int phase)
+            this.Phase = phase;
+            IO.AddFirst(phase);
+        }
+        private int StepNumber { get; set; }
+        public Amplifier()
+        {
+        }
+        public void WorkUntilHaltOrWaitForInput()
+        {
+            //while (IntCode[currentPosition] != 99)
+            while (true)
             {
-                this.Phase = phase;
-                IO.AddFirst(phase);
-            }
-            public void WorkUntilHaltOrWaitForInput()
-            {
-                while (IntCode[currentPosition] != 99)
+                StepNumber++;
+                long opcode = GetOpcodeFromInstruction(IntCode[currentPosition].ToString());
+                var modes = GetModes(IntCode[currentPosition].ToString());
+                long firstParam;
+                long secondParam;
+                switch (opcode)
                 {
-                    int opcode = GetOpcodeFromInstruction(IntCode[currentPosition].ToString());
-                    var modes = GetModes(IntCode[currentPosition].ToString());
-                    int firstParam;
-                    int secondParam;
-                    switch (opcode)
-                    {
-                        case 1:
-                            firstParam = modes[0] == 0 ? IntCode[IntCode[currentPosition + 1]] : IntCode[currentPosition + 1];
-                            secondParam = modes[1] == 0 ? IntCode[IntCode[currentPosition + 2]] : IntCode[currentPosition + 2];
-                            IntCode[IntCode[currentPosition + 3]] = firstParam + secondParam;
-                            currentPosition += 4;
-                            break;
-                        case 2:
-                            firstParam = modes[0] == 0 ? IntCode[IntCode[currentPosition + 1]] : IntCode[currentPosition + 1];
-                            secondParam = modes[1] == 0 ? IntCode[IntCode[currentPosition + 2]] : IntCode[currentPosition + 2];
-                            IntCode[IntCode[currentPosition + 3]] = firstParam * secondParam;
-                            currentPosition += 4;
-                            break;
-                        case 3: //save input
-                            if (IO.First == null)
-                                return;
-                            IntCode[IntCode[currentPosition + 1]] = IO.First.Value;
-                            IO.RemoveFirst();
-                            currentPosition += 2;
-                            break;
-                        case 4: //output
-                            Next.IO.AddLast(IntCode[IntCode[currentPosition + 1]]);
-                            Output.Add(IntCode[IntCode[currentPosition + 1]]);
-                            currentPosition += 2;
-                            break;
-                        case 5:
-                            firstParam = modes[0] == 0 ? IntCode[IntCode[currentPosition + 1]] : IntCode[currentPosition + 1];
-                            secondParam = modes[1] == 0 ? IntCode[IntCode[currentPosition + 2]] : IntCode[currentPosition + 2];
-                            if (firstParam != 0)
-                            {
-                                currentPosition = secondParam;
-                            }
-                            else
-                            {
-                                currentPosition += 3;
-                            }
-                            break;
-                        case 6:
-                            firstParam = modes[0] == 0 ? IntCode[IntCode[currentPosition + 1]] : IntCode[currentPosition + 1];
-                            secondParam = modes[1] == 0 ? IntCode[IntCode[currentPosition + 2]] : IntCode[currentPosition + 2];
-                            if (firstParam == 0)
-                            {
-                                currentPosition = secondParam;
-                            }
-                            else
-                            {
-                                currentPosition += 3;
-                            }
-                            break;
-                        case 7:
-                            firstParam = modes[0] == 0 ? IntCode[IntCode[currentPosition + 1]] : IntCode[currentPosition + 1];
-                            secondParam = modes[1] == 0 ? IntCode[IntCode[currentPosition + 2]] : IntCode[currentPosition + 2];
-                            if (firstParam < secondParam)
-                            {
-                                IntCode[IntCode[currentPosition + 3]] = 1;
-                            }
-                            else
-                            {
-                                IntCode[IntCode[currentPosition + 3]] = 0;
-                            }
-                            currentPosition += 4;
-                            break;
-                        case 8:
-                            firstParam = modes[0] == 0 ? IntCode[IntCode[currentPosition + 1]] : IntCode[currentPosition + 1];
-                            secondParam = modes[1] == 0 ? IntCode[IntCode[currentPosition + 2]] : IntCode[currentPosition + 2];
-                            if (firstParam == secondParam)
-                            {
-                                IntCode[IntCode[currentPosition + 3]] = 1;
-                            }
-                            else
-                            {
-                                IntCode[IntCode[currentPosition + 3]] = 0;
-                            }
-                            currentPosition += 4;
-                            break;
+                    case 1:
+                        firstParam = GetValue(modes[0],1);
+                        secondParam = GetValue(modes[1], 2);
+                        SetValue(modes[2], firstParam + secondParam, 3);
+                        currentPosition += 4;
+                        break;
+                    case 2:
+                        firstParam = GetValue(modes[0], 1);
+                        secondParam = GetValue(modes[1], 2);
+                        SetValue(modes[2], firstParam * secondParam, 3);
+                        currentPosition += 4;
+                        break;
+                    case 3: //save input
+                        if (IO.First == null)
+                            return;
+                        SetValue(modes[0], IO.First.Value, 1);
+                        IO.RemoveFirst();
+                        currentPosition += 2;
+                        break;
+                    case 4: //output
+                        IO.AddLast( GetValue(modes[0], 1));
+                        Output.Add(GetValue(modes[0], 1));
+                        currentPosition += 2;
+                        break;
+                    case 5:
+                        firstParam = GetValue(modes[0], 1);
+                        secondParam = GetValue(modes[1], 2);
+                        if (firstParam != 0)
+                        {
+                            currentPosition = (int)secondParam;
+                        }
+                        else
+                        {
+                            currentPosition += 3;
+                        }
+                        break;
+                    case 6:
+                        firstParam = GetValue(modes[0], 1);
+                        secondParam = GetValue(modes[1], 2);
+                        if (firstParam == 0)
+                        {
+                            currentPosition = (int)secondParam;
+                        }
+                        else
+                        {
+                            currentPosition += 3;
+                        }
+                        break;
+                    case 7:
+                        firstParam = GetValue(modes[0], 1);
+                        secondParam = GetValue(modes[1], 2);
+                        if (firstParam < secondParam)
+                        {
+                            SetValue(modes[2], 1, 3);
+                        }
+                        else
+                        {
+                            SetValue(modes[2], 0, 3);
+                        }
+                        currentPosition += 4;
+                        break;
+                    case 8:
+                        firstParam = GetValue(modes[0], 1);
+                        secondParam = GetValue(modes[1], 2);
+                        if (firstParam == secondParam)
+                        {
+                            SetValue(modes[2], 1, 3);
+                        }
+                        else
+                        {
+                            SetValue(modes[2], 0, 3);
+                        }
+                        currentPosition += 4;
+                        break;
+                    case 9:
+                        firstParam = GetValue(modes[0], 1);
+                        RelativeBase += (int)firstParam;
+                        currentPosition += 2;
+                        break;
 
 
-                            //Console.WriteLine(String.Join(",",list));
-
-                    }
+                    //Console.WriteLine(String.Join(",",list));
+                    case 99:
+                        //currentPosition=0;
+                        //IO.Clear();
+                        //IO.AddLast(1);
+                        return;
+                        break;
                 }
-
-            }
-                public bool IsHalt()
-                {
-                    return IntCode[currentPosition] == 99;
-                }
-            
-            private int GetOpcodeFromInstruction(string instruction)
-            {
-                instruction = instruction.PadLeft(2, '0');
-                return int.Parse(instruction.Substring(instruction.Length - 2));
             }
 
-            private List<int> GetModes(string instruction)
+        }
+        public bool IsHalt()
+        {
+            return IntCode[currentPosition] == 99;
+        }
+
+        private int GetOpcodeFromInstruction(string instruction)
+        {
+            instruction = instruction.PadLeft(2, '0');
+            return int.Parse(instruction.Substring(instruction.Length - 2));
+        }
+
+        private long GetValue(int mode, int paramNumber = 1)
+        {
+            ExtentIfNeed(currentPosition + paramNumber);
+            switch (mode){
+                case 0:
+                    ExtentIfNeed(IntCode[currentPosition + paramNumber]);
+                    return IntCode[(int)IntCode[currentPosition + paramNumber]];
+                case 1:
+                    return IntCode[currentPosition + paramNumber];
+                case 2:
+                    ExtentIfNeed(RelativeBase + IntCode[currentPosition + paramNumber]);
+                    return IntCode[(int)(RelativeBase + IntCode[currentPosition + paramNumber])];
+            }
+            throw new Exception();
+        }
+
+
+        private void SetValue(int mode, long value, int paramNumber = 1)
+        {
+            ExtentIfNeed(currentPosition + paramNumber);
+            switch (mode)
             {
-                instruction = instruction.PadLeft(2, '0');
-                instruction = instruction.Substring(0, instruction.Length - 2).PadLeft(5, '0');
-                var list = new List<int>();
+                case 0:
+                    ExtentIfNeed(IntCode[currentPosition + paramNumber]);
+                    IntCode[(int)IntCode[currentPosition + paramNumber]] = value;
+                    return;
+                case 2:
+                    ExtentIfNeed(RelativeBase + IntCode[currentPosition + paramNumber]);
+                    IntCode[(int)(RelativeBase + IntCode[currentPosition + paramNumber])] = value;
+                    return;
+            }
+            throw new Exception();
+        }
 
-                for (int i = instruction.Length - 1; i >= 0; i--)
-                    list.Add(instruction[i] - '0');
-
-                return list;
-
+        private void ExtentIfNeed(long position)
+        {
+            if(IntCode.Count<= position)
+            {
+                IntCode.AddRange(Enumerable.Repeat((long)0, (int)position - IntCode.Count + 1).ToList());
             }
         }
+        private List<int> GetModes(string instruction)
+        {
+            instruction = instruction.PadLeft(2, '0');
+            instruction = instruction.Substring(0, instruction.Length - 2).PadLeft(5, '0');
+            var list = new List<int>();
+
+            for (int i = instruction.Length - 1; i >= 0; i--)
+                list.Add(instruction[i] - '0');
+
+            return list;
+
+        }
     }
+   
 }

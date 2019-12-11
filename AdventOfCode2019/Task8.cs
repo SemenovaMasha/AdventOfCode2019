@@ -15,7 +15,6 @@ namespace AdventOfCode2019
             int M = 6;
 
             int layersNumber = input.Length / N / M;
-            var Layers = new List<Layer>();
 
             var layerStrings = Split(input, N * M).ToList();
 
@@ -63,14 +62,5 @@ namespace AdventOfCode2019
 
         public override int TaskNumber => 8;
 
-        class Layer
-        {
-            public int [,] Pixels { get; set; }
-
-            public Layer(int N, int M)
-            {
-                Pixels = new int[N, M];
-            }
-        }
     }
 }

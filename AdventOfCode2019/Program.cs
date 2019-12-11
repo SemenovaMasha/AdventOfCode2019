@@ -6,11 +6,11 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            var task = new Task8();
+            var task = new Task9();
 
             while (true)
             {
-                task.Start2();
+                task.Start1();
                 Console.ReadKey();
             }
 

@@ -41,6 +41,14 @@ namespace AdventOfCode2019
                 .Select(x => int.Parse(x))
                 .ToList();
         }
+        public List<long> GetLongList_BySeparator(string fileName, string separator)
+        {
+            return System.IO.File
+                .ReadAllText(fileName)
+                .Split(separator)
+                .Select(x => long.Parse(x))
+                .ToList();
+        }
 
         public List<string> GetStringList_ByLine(string fileName)
         {
