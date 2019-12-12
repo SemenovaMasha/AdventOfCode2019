@@ -30,14 +30,35 @@ namespace AdventOfCode2019
 
             }
 
-            Grid.PrintAroundCenterWithRadius(50);
 
             Console.WriteLine(Grid.GetPaintedCount());
         }
 
         public override void Start2()
         {
-            throw new NotImplementedException();
+            var filename = GetFileName1();
+            var amplifier = new Amplifier()
+            {
+                IntCode = GetLongList_BySeparator(filename, ","),
+            };
+
+            var Grid = new Grid(10_000);
+            Grid.Panels[Grid.CurrentY, Grid.CurrentX] = 1;
+
+            while (!amplifier.IsHalt())
+            {
+                amplifier.IO.AddLast(Grid.GetCurrentPanelColor());
+                amplifier.WorkUntilHaltOrTwoOutput();
+                if (amplifier.IsHalt())
+                    break;
+                Grid.Move((int)amplifier.Output[0], (int)amplifier.Output[1]);
+                amplifier.Output.Clear();
+
+            }
+
+            Grid.PrintAroundCenterWithRadius(50);
+
+            Console.WriteLine(Grid.GetPaintedCount());
         }
 
         class Grid
@@ -57,7 +78,6 @@ namespace AdventOfCode2019
                 Panels = new int[size, size];
                 WasPainted = new int[size, size];
                 CurrentX = CurrentY = size / 2;
-                Panels[CurrentY, CurrentX] = 1;
             }
 
             public void Move(int param1, int param2)
