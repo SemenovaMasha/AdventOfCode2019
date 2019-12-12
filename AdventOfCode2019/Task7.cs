@@ -237,107 +237,113 @@ namespace AdventOfCode2019
         public Amplifier()
         {
         }
-        public void WorkUntilHaltOrWaitForInput()
+
+        private void OneWork()
         {
-            //while (IntCode[currentPosition] != 99)
-            while (true)
-            {
                 StepNumber++;
                 long opcode = GetOpcodeFromInstruction(IntCode[currentPosition].ToString());
                 var modes = GetModes(IntCode[currentPosition].ToString());
                 long firstParam;
                 long secondParam;
-                switch (opcode)
-                {
-                    case 1:
-                        firstParam = GetValue(modes[0],1);
-                        secondParam = GetValue(modes[1], 2);
-                        SetValue(modes[2], firstParam + secondParam, 3);
-                        currentPosition += 4;
-                        break;
-                    case 2:
-                        firstParam = GetValue(modes[0], 1);
-                        secondParam = GetValue(modes[1], 2);
-                        SetValue(modes[2], firstParam * secondParam, 3);
-                        currentPosition += 4;
-                        break;
-                    case 3: //save input
-                        if (IO.First == null)
-                            return;
-                        SetValue(modes[0], IO.First.Value, 1);
-                        IO.RemoveFirst();
-                        currentPosition += 2;
-                        break;
-                    case 4: //output
-                        IO.AddLast( GetValue(modes[0], 1));
-                        Output.Add(GetValue(modes[0], 1));
-                        currentPosition += 2;
-                        break;
-                    case 5:
-                        firstParam = GetValue(modes[0], 1);
-                        secondParam = GetValue(modes[1], 2);
-                        if (firstParam != 0)
-                        {
-                            currentPosition = (int)secondParam;
-                        }
-                        else
-                        {
-                            currentPosition += 3;
-                        }
-                        break;
-                    case 6:
-                        firstParam = GetValue(modes[0], 1);
-                        secondParam = GetValue(modes[1], 2);
-                        if (firstParam == 0)
-                        {
-                            currentPosition = (int)secondParam;
-                        }
-                        else
-                        {
-                            currentPosition += 3;
-                        }
-                        break;
-                    case 7:
-                        firstParam = GetValue(modes[0], 1);
-                        secondParam = GetValue(modes[1], 2);
-                        if (firstParam < secondParam)
-                        {
-                            SetValue(modes[2], 1, 3);
-                        }
-                        else
-                        {
-                            SetValue(modes[2], 0, 3);
-                        }
-                        currentPosition += 4;
-                        break;
-                    case 8:
-                        firstParam = GetValue(modes[0], 1);
-                        secondParam = GetValue(modes[1], 2);
-                        if (firstParam == secondParam)
-                        {
-                            SetValue(modes[2], 1, 3);
-                        }
-                        else
-                        {
-                            SetValue(modes[2], 0, 3);
-                        }
-                        currentPosition += 4;
-                        break;
-                    case 9:
-                        firstParam = GetValue(modes[0], 1);
-                        RelativeBase += (int)firstParam;
-                        currentPosition += 2;
-                        break;
+            switch (opcode)
+            {
+                case 1:
+                    firstParam = GetValue(modes[0], 1);
+                    secondParam = GetValue(modes[1], 2);
+                    SetValue(modes[2], firstParam + secondParam, 3);
+                    currentPosition += 4;
+                    break;
+                case 2:
+                    firstParam = GetValue(modes[0], 1);
+                    secondParam = GetValue(modes[1], 2);
+                    SetValue(modes[2], firstParam * secondParam, 3);
+                    currentPosition += 4;
+                    break;
+                case 3: //save input
+                    if (IO.First == null)
+                        return ;
+                    SetValue(modes[0], IO.First.Value, 1);
+                    IO.RemoveFirst();
+                    currentPosition += 2;
+                    break;
+                case 4: //output
+                        //IO.AddLast( GetValue(modes[0], 1));
+                    Output.Add(GetValue(modes[0], 1));
+                    currentPosition += 2;
+                    break;
+                case 5:
+                    firstParam = GetValue(modes[0], 1);
+                    secondParam = GetValue(modes[1], 2);
+                    if (firstParam != 0)
+                    {
+                        currentPosition = (int)secondParam;
+                    }
+                    else
+                    {
+                        currentPosition += 3;
+                    }
+                    break;
+                case 6:
+                    firstParam = GetValue(modes[0], 1);
+                    secondParam = GetValue(modes[1], 2);
+                    if (firstParam == 0)
+                    {
+                        currentPosition = (int)secondParam;
+                    }
+                    else
+                    {
+                        currentPosition += 3;
+                    }
+                    break;
+                case 7:
+                    firstParam = GetValue(modes[0], 1);
+                    secondParam = GetValue(modes[1], 2);
+                    if (firstParam < secondParam)
+                    {
+                        SetValue(modes[2], 1, 3);
+                    }
+                    else
+                    {
+                        SetValue(modes[2], 0, 3);
+                    }
+                    currentPosition += 4;
+                    break;
+                case 8:
+                    firstParam = GetValue(modes[0], 1);
+                    secondParam = GetValue(modes[1], 2);
+                    if (firstParam == secondParam)
+                    {
+                        SetValue(modes[2], 1, 3);
+                    }
+                    else
+                    {
+                        SetValue(modes[2], 0, 3);
+                    }
+                    currentPosition += 4;
+                    break;
+                case 9:
+                    firstParam = GetValue(modes[0], 1);
+                    RelativeBase += (int)firstParam;
+                    currentPosition += 2;
+                    break;
 
+            }
+        }
 
-                    //Console.WriteLine(String.Join(",",list));
-                    case 99:
-                        //currentPosition=0;
-                        //IO.Clear();
-                        //IO.AddLast(1);
-                        return;
-                        break;
-                }
+        public void WorkUntilHaltOrWaitForInput()
+        {
+            while (IntCode[currentPosition] != 99)
+            //while (true)
+            {
+                OneWork();
+            }
+
+        }
+        public void WorkUntilHaltOrTwoOutput()
+        {
+            while (IntCode[currentPosition] != 99 && Output.Count<2)
+            {
+                OneWork();
             }
 
         }
