@@ -6,7 +6,7 @@ namespace AdventOfCode2019
     {
         static void Main(string[] args)
         {
-            var task = new Task12();
+            var task = new Task13();
 
             while (true)
             {
