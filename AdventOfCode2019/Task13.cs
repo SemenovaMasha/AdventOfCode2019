@@ -49,63 +49,62 @@ namespace AdventOfCode2019
                 IntCode = GetLongList_BySeparator(filename, ","),
             };
 
-            //amplifier.IO.AddFirst(2);
             amplifier.IntCode[0] = 2;
-            //amplifier.IO.AddLast(0);
 
+            var screen = new Screen(40);
+            int nextDrawPosition = 0;
+            long step = 0;
             while (true)
             {
-                PrintScreen(amplifier);
-                ConsoleKeyInfo _Key = Console.ReadKey();
-                switch (_Key.Key)
+                step++;
+
+                if (amplifier.Output.Count > nextDrawPosition)
                 {
-                    case ConsoleKey.RightArrow:
-                        amplifier.IO.AddLast(1);
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        amplifier.IO.AddLast(-1);
-                        break;
-                    default:
-                        amplifier.IO.AddLast(0);
-                        break;
+                    screen.AddMoves(amplifier.Output.GetRange(nextDrawPosition, amplifier.Output.Count - nextDrawPosition));
+                    nextDrawPosition = amplifier.Output.Count;
                 }
+                //ConsoleKeyInfo _Key = Console.ReadKey();
+                //switch (_Key.Key)
+                //{
+                //    case ConsoleKey.RightArrow:
+                //        amplifier.IO.AddLast(1);
+                //        break;
+                //    case ConsoleKey.LeftArrow:
+                //        amplifier.IO.AddLast(-1);
+                //        break;
+                //    default:
+                //        amplifier.IO.AddLast(0);
+                //        break;
+                //}
+
+                long current3X = screen.Get3X();
+                long current4X = screen.Get4X();
+                if (current4X > current3X)
+                {
+                    amplifier.IO.AddLast(1);
+                }else if (current4X < current3X)
+                {
+                    amplifier.IO.AddLast(-1);
+                }
+                else amplifier.IO.AddLast(0);
+
+                //if (step % 1 == 0)
+                //{
+                //    screen.PrintScreen();
+                //    Console.ReadKey();
+                //}
 
                 amplifier.WorkUntilHaltOrWaitForInput();
                 if (amplifier.IsHalt())
                     break;
 
-                PrintScreen(amplifier);
-                
-
-                
-                //if(screen.GetBlockTilesCount()==0)
-                //    break;
-
             }
 
             Console.Clear();
             Console.WriteLine("Game over");
+            Console.WriteLine($"Score = {amplifier.Output.Last()}");
         }
-
-        private void PrintScreen(Amplifier amplifier)
-        {
-            var output = amplifier.Output;
-            var screen = new Screen(40);
-
-            for (int i = 0; i < output.Count; i += 3)
-            {
-                if (output[i] == -1 && output[i + 1] == 0)
-                {
-                    Console.WriteLine($"Score = {output[i + 2]}");
-
-                }
-                else
-                    screen.Grid[output[i], output[i + 1]] = output[i + 2];
-            }
-
-            screen.Print();
-        }
-
+        
         class Screen
         {
             /// <summary>
@@ -116,11 +115,24 @@ namespace AdventOfCode2019
             /// 4 is a ball tile.The ball moves diagonally and bounces off objects.
             /// </summary>
             public long[,] Grid { get; set; }
-
+            public long Score { get; set; }
             public Screen(int size)
             {
                 Grid = new long[size, size];
 
+            }
+
+            public void AddMoves(List<long> output)
+            {
+                for (int i = 0; i < output.Count; i += 3)
+                {
+                    if (output[i] == -1 && output[i + 1] == 0)
+                    {
+                        Score = output[i + 2];
+                    }
+                    else
+                        Grid[output[i], output[i + 1]] = output[i + 2];
+                }
             }
 
             public void Print()
@@ -150,6 +162,38 @@ namespace AdventOfCode2019
                 }
 
                 return blockTiles;
+            }
+
+            public long Get3X()
+            {
+                for (int i = 0; i < Grid.GetLength(0); i++)
+                {
+                    for (int j = 0; j < Grid.GetLength(1); j++)
+                    {
+                        if (Grid[i, j] == 3) return i;
+                    }
+                }
+                return 0;
+            }
+            public long Get4X()
+            {
+                for (int i = 0; i < Grid.GetLength(0); i++)
+                {
+                    for (int j = 0; j < Grid.GetLength(1); j++)
+                    {
+                        if (Grid[i, j] == 4) return i;
+                    }
+                }
+                return 0;
+            }
+
+            public void PrintScreen()
+            {
+                Console.WriteLine($"3 x = {Get3X()}");
+                Console.WriteLine($"4 x = {Get4X()}");
+                Console.WriteLine($"Score = {Score}");
+
+                Print();
             }
         }
     }
