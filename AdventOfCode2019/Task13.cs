@@ -55,6 +55,7 @@ namespace AdventOfCode2019
 
             while (true)
             {
+                PrintScreen(amplifier);
                 ConsoleKeyInfo _Key = Console.ReadKey();
                 switch (_Key.Key)
                 {
@@ -69,25 +70,13 @@ namespace AdventOfCode2019
                         break;
                 }
 
-
-                var output = amplifier.Output;
-                var screen = new Screen(40);
-
-                for (int i = 0; i < output.Count ; i += 3)
-                {
-                    if (output[i] == -1 && output[i + 1] == 0)
-                    {
-                        Console.WriteLine($"Score = {output[i + 2]}");
-
-                    }else
-                        screen.Grid[output[i], output[i + 1]] = output[i + 2];
-                }
-                
-                screen.Print();
-
                 amplifier.WorkUntilHaltOrWaitForInput();
                 if (amplifier.IsHalt())
                     break;
+
+                PrintScreen(amplifier);
+                
+
                 
                 //if(screen.GetBlockTilesCount()==0)
                 //    break;
@@ -96,6 +85,25 @@ namespace AdventOfCode2019
 
             Console.Clear();
             Console.WriteLine("Game over");
+        }
+
+        private void PrintScreen(Amplifier amplifier)
+        {
+            var output = amplifier.Output;
+            var screen = new Screen(40);
+
+            for (int i = 0; i < output.Count; i += 3)
+            {
+                if (output[i] == -1 && output[i + 1] == 0)
+                {
+                    Console.WriteLine($"Score = {output[i + 2]}");
+
+                }
+                else
+                    screen.Grid[output[i], output[i + 1]] = output[i + 2];
+            }
+
+            screen.Print();
         }
 
         class Screen
