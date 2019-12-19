@@ -56,6 +56,10 @@ namespace AdventOfCode2019
             while (true)
             {
                 PrintScreen(amplifier);
+                if (amplifier.IO.Count > 0)
+                {
+
+                }
                 ConsoleKeyInfo _Key = Console.ReadKey();
                 switch (_Key.Key)
                 {
