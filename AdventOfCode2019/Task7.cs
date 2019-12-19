@@ -262,10 +262,6 @@ namespace AdventOfCode2019
                 case 3: //save input
                     if (IO.First == null)
                         return ;
-                    if (IO.Count > 1)
-                    {
-
-                    }
                     SetValue(modes[0], IO.First.Value, 1);
                     IO.RemoveFirst();
                     currentPosition += 2;
@@ -336,7 +332,7 @@ namespace AdventOfCode2019
 
         public void WorkUntilHaltOrWaitForInput()
         {
-            while (IntCode[currentPosition] != 99&&IO.Count>0)
+            while (IntCode[currentPosition] != 99&& (IO.Count>0 || IntCode[currentPosition] != 3))
             //while (true)
             {
                 OneWork();
@@ -350,6 +346,17 @@ namespace AdventOfCode2019
                 OneWork();
             }
 
+        }
+
+        public string GetLastOutput(int count =9)
+        {
+            string s = "";
+            if (Output.Count > count)
+            for(int i = 0; i < count; i++)
+            {
+                s += Output[Output.Count - count + i]+" ";
+            }
+            return s;
         }
         public bool IsHalt()
         {
