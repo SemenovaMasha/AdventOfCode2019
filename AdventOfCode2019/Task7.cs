@@ -351,7 +351,7 @@ namespace AdventOfCode2019
         public string GetLastOutput(int count =9)
         {
             string s = "";
-            if (Output.Count > count)
+            if (Output.Count >= count)
             for(int i = 0; i < count; i++)
             {
                 s += Output[Output.Count - count + i]+" ";
