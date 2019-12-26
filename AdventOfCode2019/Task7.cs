@@ -332,7 +332,7 @@ namespace AdventOfCode2019
 
         public void WorkUntilHaltOrWaitForInput()
         {
-            while (IntCode[currentPosition] != 99&& (IO.Count>0 || IntCode[currentPosition] != 3))
+            while (IntCode[currentPosition] != 99&& (IO.Count>0 || IntCode[currentPosition]%10 != 3))
             //while (true)
             {
                 OneWork();
